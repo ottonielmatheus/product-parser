@@ -1,5 +1,5 @@
 # Product Parser
-
+NestJS | Typescript
 
 ### Project setup
 
@@ -39,3 +39,4 @@ $ npm run test:e2e
 # test coverage
 $ npm run test:cov
 ```
+>  This is a challenge by [Coodesh](https://coodesh.com/)
