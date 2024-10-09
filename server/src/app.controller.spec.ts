@@ -1,3 +1,4 @@
+import * as os from 'os';
 import { Test, TestingModule } from '@nestjs/testing';
 import { AppController } from './app.controller';
 import { AppModule } from './app.module';
@@ -13,8 +14,15 @@ describe('AppController', () => {
     appController = app.get<AppController>(AppController);
   });
 
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
   describe('root', () => {
     it('should return app name, database read and write health, last CRON executed, time alive and memory usage', async () => {
+      jest.spyOn(os, 'totalmem').mockReturnValue(8 * 1024 * 1024 * 1024);
+      jest.spyOn(os, 'freemem').mockReturnValue(4 * 1024 * 1024 * 1024);
+
       expect(await appController.getHealth()).toStrictEqual({
         status: expect.stringMatching(/(ok|warn|degraded)/),
         name: 'product-parser-api',
@@ -24,10 +32,10 @@ describe('AppController', () => {
           write: 'ok',
         },
         memory: {
-          status: expect.stringMatching(/(ok|warn|degraded)/),
-          total: expect.stringMatching(/\d+MB/),
-          used: expect.stringMatching(/\d+MB/),
-          used_percent: expect.stringMatching(/\d{2,3}.\d{2}/),
+          status: 'ok',
+          total: '8192MB',
+          used: '4096MB',
+          used_percent: '50.00',
         },
         uptime: {
           human_readable: expect.any(String),
