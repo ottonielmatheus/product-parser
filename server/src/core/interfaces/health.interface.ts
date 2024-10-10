@@ -1,4 +1,4 @@
-import { ICRONLog } from './cron-log.interface';
+import { IImport } from './import.interface';
 
 export enum HealthStatus {
   OK = 'ok',
@@ -28,5 +28,5 @@ export interface IAppHealth {
   };
   memory: IMemoryHealth;
   database: IDatabaseHealth;
-  last_runned_cron: ICRONLog | null;
+  last_runned_cron: IImport | null;
 }

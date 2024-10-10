@@ -5,8 +5,8 @@ import { ProductsModule } from './modules/products/products.module';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { MongooseService } from './core/services/mongoose.service';
-import { CRONLogsModule } from './modules/cron-logs/cron-logs.module';
-import { CRONLogsService } from './modules/cron-logs/cron-logs.service';
+import { ImportsModule } from './modules/imports/import.module';
+import { ImportsService } from './modules/imports/import.service';
 
 @Module({
   imports: [
@@ -15,9 +15,9 @@ import { CRONLogsService } from './modules/cron-logs/cron-logs.service';
       useClass: MongooseService,
     }),
     ProductsModule,
-    CRONLogsModule,
+    ImportsModule,
   ],
   controllers: [AppController],
-  providers: [AppService, CRONLogsService],
+  providers: [AppService, ImportsService],
 })
 export class AppModule {}

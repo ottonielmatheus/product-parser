@@ -1,0 +1,22 @@
+service: product-parser-worker
+
+plugins:
+  - serverless-plugin-typescript
+  - serverless-offline
+
+build:
+  esbuild: false
+
+package:
+  exclude:
+    - node_modules/**
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+
+functions:
+  products-pooling:
+    handler: src/handler.run
+    events:
+      - schedule: cron(0 3 * * ? *)

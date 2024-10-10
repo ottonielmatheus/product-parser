@@ -9,7 +9,7 @@ import {
   IMemoryHealth,
   HealthStatus,
 } from '@interfaces';
-import { CRONLogsService } from './modules/cron-logs/cron-logs.service';
+import { ImportsService } from './modules/imports/import.service';
 
 const MAX_SAFE_MEMORY_USAGE_PERCENTAGE = 80;
 
@@ -17,7 +17,7 @@ const MAX_SAFE_MEMORY_USAGE_PERCENTAGE = 80;
 export class AppService {
   constructor(
     @InjectConnection() private readonly connection: Connection,
-    private readonly cronLogsService: CRONLogsService,
+    private readonly importService: ImportsService,
   ) {}
 
   async getHealth(): Promise<IAppHealth> {
@@ -38,7 +38,7 @@ export class AppService {
           { includeSeconds: true },
         ),
       },
-      last_runned_cron: await this.cronLogsService.getLast(),
+      last_runned_cron: await this.importService.getLast(),
     };
   }
 

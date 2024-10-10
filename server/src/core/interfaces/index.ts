@@ -1,2 +1,2 @@
-export * from './cron-log.interface';
+export * from './import.interface';
 export * from './health.interface';
