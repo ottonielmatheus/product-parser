@@ -35,6 +35,9 @@ export class ImportHandler {
     } catch (err) {
       this.import.message = err.message;
       this.import.status = ImportStatus.FAILED;
+
+      // because we want to CloudWatch catch it
+      throw err;
     }
 
     this.import.finished_t = new Date();
@@ -86,8 +89,7 @@ export class ImportHandler {
       }
 
       reader.close();
-    } catch (err) {
-      console.info(err);
+    } catch {
       throw new Error('Failed while reading lines');
     }
 
