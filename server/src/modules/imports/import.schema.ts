@@ -13,7 +13,13 @@ export class Import implements IImport {
   runned_t: Date;
 
   @Prop()
+  finished_t: Date;
+
+  @Prop()
   total_data_imported: number;
+
+  @Prop()
+  message: string;
 }
 
 export const ImportSchema = SchemaFactory.createForClass(Import);

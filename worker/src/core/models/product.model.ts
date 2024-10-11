@@ -28,5 +28,5 @@ const productSchema = new Schema<IProduct>({
   image_url: String,
 });
 
-export type ProductModel = HydratedDocument<IProduct>;
+export type ProductDocument = HydratedDocument<IProduct>;
 export const ProductModel = model<IProduct>('Product', productSchema);

@@ -1,7 +1,5 @@
 import { IImport } from 'core/interfaces/import.interface';
-import { Document, HydratedDocument, Schema, model } from 'mongoose';
-
-export type ImportDocument = Document<IImport>;
+import { HydratedDocument, Schema, model } from 'mongoose';
 
 const importSchema = new Schema<IImport>({
   status: String,
@@ -11,5 +9,5 @@ const importSchema = new Schema<IImport>({
   total_data_imported: { type: Number, default: 0 },
 });
 
-export type ImportModel = HydratedDocument<IImport>;
+export type ImportDocument = HydratedDocument<IImport>;
 export const ImportModel = model<IImport>('Import', importSchema);

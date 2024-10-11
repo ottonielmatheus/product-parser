@@ -3,21 +3,22 @@ import { Injectable } from '@nestjs/common';
 import { InjectConnection } from '@nestjs/mongoose';
 import { Connection } from 'mongoose';
 import { addSeconds, formatDistance } from 'date-fns';
+import { MAX_SAFE_MEMORY_USAGE_PERCENTAGE } from '@consts';
 import {
   IAppHealth,
   IDatabaseHealth,
   IMemoryHealth,
   HealthStatus,
 } from '@interfaces';
-import { ImportsService } from './modules/imports/import.service';
-
-const MAX_SAFE_MEMORY_USAGE_PERCENTAGE = 80;
+import { ImportsService } from './modules/imports/imports.service';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AppService {
   constructor(
     @InjectConnection() private readonly connection: Connection,
     private readonly importService: ImportsService,
+    private readonly configService: ConfigService,
   ) {}
 
   async getHealth(): Promise<IAppHealth> {
@@ -26,7 +27,9 @@ export class AppService {
     const uptime = Math.floor(process.uptime());
 
     return {
-      name: 'product-parser-api',
+      name: this.configService.get<string>('APP_NAME') || 'app',
+      description: this.configService.get<string>('APP_DESCRIPTION') || '',
+      version: this.configService.get<string>('APP_VERSION') || '0.0.0',
       status: this.calculateStatus(memoryHealth, databaseHealth),
       memory: memoryHealth,
       database: databaseHealth,

@@ -1,24 +1,70 @@
-import { Controller, Delete, Get, Put } from '@nestjs/common';
+import { IPaginated } from '@interfaces';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Put,
+  NotFoundException,
+  Query,
+} from '@nestjs/common';
+import { Product } from './product.schema';
+import { ProductsService } from './products.service';
+import { UpdateProductDto } from './dto/update.dto';
+import {
+  ApiBearerAuth,
+  ApiNotFoundResponse,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
 
+@ApiBearerAuth()
+@ApiUnauthorizedResponse({ description: 'Requires access token' })
 @Controller('products')
 export class ProductsController {
-  @Put('/products/:code')
-  updateProduct(): string {
-    return 'Será responsável por receber atualizações do Projeto Web';
+  constructor(private readonly productsService: ProductsService) {}
+
+  @Get('/')
+  async listProducts(
+    @Query('take') take: number,
+    @Query('skip') skip: number,
+  ): Promise<IPaginated<Product>> {
+    return this.productsService.findAll(take, skip);
   }
 
-  @Delete('/products/:code')
-  deleteProduct(): string {
-    return 'Mudar o status do produto para `trash`';
+  @ApiNotFoundResponse({ description: 'Product not found' })
+  @Put(':code')
+  async updateProduct(
+    @Param('code') code: number,
+    @Body() payload: UpdateProductDto,
+  ): Promise<Product> {
+    const updatedProduct = await this.productsService.updateByCode(
+      code,
+      payload,
+    );
+    if (!updatedProduct) {
+      throw new NotFoundException(`Product with code ${code} not found`);
+    }
+    return updatedProduct;
   }
 
-  @Get('/products/:code')
-  getProduct(): string {
-    return 'Obter a informação somente de um produto da base de dados';
+  @ApiNotFoundResponse({ description: 'Product not found' })
+  @Delete(':code')
+  async deleteProduct(@Param('code') code: number): Promise<Product> {
+    const deletedProduct = await this.productsService.deleteByCode(code);
+    if (!deletedProduct) {
+      throw new NotFoundException(`Product with code ${code} not found`);
+    }
+    return deletedProduct;
   }
 
-  @Get('/products')
-  listProducts(): string {
-    return 'Listar todos os produtos da base de dados, adicionar sistema de paginação para não sobrecarregar o `REQUEST`.';
+  @ApiNotFoundResponse({ description: 'Product not found' })
+  @Get(':code')
+  async getProduct(@Param('code') code: number): Promise<Product> {
+    const product = await this.productsService.findByCode(code);
+    if (!product) {
+      throw new NotFoundException(`Product with code ${code} not found`);
+    }
+    return product;
   }
 }

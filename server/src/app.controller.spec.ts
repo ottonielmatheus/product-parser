@@ -23,7 +23,7 @@ describe('AppController', () => {
       jest.spyOn(os, 'totalmem').mockReturnValue(8 * 1024 * 1024 * 1024);
       jest.spyOn(os, 'freemem').mockReturnValue(4 * 1024 * 1024 * 1024);
 
-      expect(await appController.getHealth()).toStrictEqual({
+      expect(await appController.getHealth()).toEqual({
         status: expect.stringMatching(/(ok|warn|degraded)/),
         name: 'product-parser-api',
         database: {

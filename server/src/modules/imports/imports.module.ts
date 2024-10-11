@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Import, ImportSchema } from './import.schema';
-import { ImportsService } from './import.service';
+import { ImportsService } from './imports.service';
 
 const ImportModel = MongooseModule.forFeature([
   {
@@ -12,8 +12,8 @@ const ImportModel = MongooseModule.forFeature([
 
 @Module({
   imports: [ImportModel],
+  exports: [ImportModel],
   controllers: [],
   providers: [ImportsService],
-  exports: [ImportModel],
 })
 export class ImportsModule {}

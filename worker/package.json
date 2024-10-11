@@ -47,7 +47,8 @@
     "coverageDirectory": "../coverage",
     "testEnvironment": "node",
     "moduleNameMapper": {
-      "^@core/(.*)$": "<rootDir>/../src/core/$1"
+      "^@core/(.*)$": "<rootDir>/../src/core/$1",
+      "@consts": "<rootDir>/core/constants"
     }
   }
 }

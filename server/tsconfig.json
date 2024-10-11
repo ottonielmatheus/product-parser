@@ -21,7 +21,9 @@
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
     "paths": {
-      "@interfaces": ["src/core/interfaces/index"]
+      "@interfaces": ["src/core/interfaces/index"],
+      "@consts": ["src/core/constants"],
+      "@core/*": ["src/core/*"],
     }
   },
   "include": ["src/**/*.ts", "test/**/*.ts"],

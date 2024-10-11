@@ -20,7 +20,8 @@
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
     "paths": {
-      "@core/*": ["core/*"]
+      "@core/*": ["core/*"],
+      "@consts": ["core/constants"],
     }
   },
   "include": ["src/**/*.ts", "test/**/*.ts"],

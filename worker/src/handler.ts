@@ -5,17 +5,17 @@ import { ClientSession } from 'mongoose';
 import env from './core/env';
 import { ImportStatus } from './core/interfaces/import.interface';
 import { Database } from './core/services/database';
-import { ImportModel } from './core/models/import.model';
+import { ImportDocument, ImportModel } from './core/models/import.model';
 import { ProductModel } from './core/models/product.model';
 import { IProduct, ProductStatus } from './core/interfaces/product.interface';
 
 const MAX_ROWS = 100;
 
 export class ImportHandler {
-  static import: ImportModel;
+  static import: ImportDocument;
   static session: ClientSession;
 
-  static async run(session: ClientSession): Promise<ImportModel> {
+  static async run(session: ClientSession): Promise<ImportDocument> {
     this.session = session;
     this.import = new ImportModel({
       status: ImportStatus.PENDING,
@@ -126,7 +126,7 @@ export class ImportHandler {
 }
 
 export async function run() {
-  return await Database.connect<Promise<ImportModel>>(
+  return await Database.connect<Promise<ImportDocument>>(
     async (session) => await ImportHandler.run(session),
   );
 }

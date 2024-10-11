@@ -21,6 +21,8 @@ export interface IDatabaseHealth {
 
 export interface IAppHealth {
   name: string;
+  description: string;
+  version: string;
   status: HealthStatus;
   uptime: {
     seconds: number;
