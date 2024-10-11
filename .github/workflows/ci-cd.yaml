@@ -21,7 +21,7 @@ jobs:
 
       - name: Create .env file
         run: |
-          cat > .env.prod << EOF
+          cat > .env << EOF
           ${{ secrets.WORKER_ENV }}
           EOF
 
@@ -37,7 +37,7 @@ jobs:
         run: npm t
 
       - name: Serverless deploy
-        uses: serverless/github-action@v3.2
+        uses: serverless/github-action@master
         with:
           args: -c "cd ./worker && serverless deploy --stage prod"
           entrypoint: /bin/sh

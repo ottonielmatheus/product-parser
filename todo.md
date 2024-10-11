@@ -33,8 +33,7 @@
 - [X] **Diferencial 4** Descrever a documentação da API utilizando o conceito de Open API 3.0;
 - [ ] **Diferencial 5** Escrever Unit Tests para os endpoints  GET e PUT do CRUD;
 - [X] **Diferencial 6** Escrever um esquema de segurança utilizando `API KEY` nos endpoints. Ref: https://learning.postman.com/docs/sending-requests/authorization/#api-key
-
-- [ ] Publicar o worker com pipeline de CI/CD
+- [X] Publicar o worker com pipeline de CI/CD
 - [ ] Publicar o server com pipeline de CI/CD
 
 ## Readme do Repositório

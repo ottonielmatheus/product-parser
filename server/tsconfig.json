@@ -24,6 +24,7 @@
       "@interfaces": ["src/core/interfaces/index"],
       "@consts": ["src/core/constants"],
       "@core/*": ["src/core/*"],
+      "@modules/*": ["src/modules/*"],
     }
   },
   "include": ["src/**/*.ts", "test/**/*.ts"],

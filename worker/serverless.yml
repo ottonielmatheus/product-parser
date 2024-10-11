@@ -1,16 +1,15 @@
 service: product-parser-worker
 
-custom:
-  esbuild:
-    bundle: true
-    minify: false
-    sourcemap: true
-    target: node20
+plugins:
+  - serverless-plugin-typescript
+  - serverless-offline
+
+build:
+  esbuild: false
 
 package:
-  individually: true
   exclude:
-    - node_modules/**
+    - test/**
 
 useDotenv: true
 provider:
