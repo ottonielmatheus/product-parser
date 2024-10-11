@@ -2,14 +2,13 @@ import { Readable } from 'stream';
 import { createUnzip } from 'zlib';
 import { createInterface } from 'readline';
 import { ClientSession } from 'mongoose';
-import env from './core/env';
-import { ImportStatus } from './core/interfaces/import.interface';
-import { Database } from './core/services/database';
-import { ImportDocument, ImportModel } from './core/models/import.model';
-import { ProductModel } from './core/models/product.model';
-import { IProduct, ProductStatus } from './core/interfaces/product.interface';
-
-const MAX_ROWS = 100;
+import { MAX_ROWS } from '@consts';
+import env from '@core/env';
+import { ImportStatus } from '@core/interfaces/import.interface';
+import { Database } from '@core/services/database';
+import { ImportDocument, ImportModel } from '@core/models/import.model';
+import { ProductModel } from '@core/models/product.model';
+import { IProduct, ProductStatus } from '@core/interfaces/product.interface';
 
 export class ImportHandler {
   static import: ImportDocument;
@@ -36,7 +35,7 @@ export class ImportHandler {
       this.import.message = err.message;
       this.import.status = ImportStatus.FAILED;
 
-      // because we want to CloudWatch catch it
+      // because we want the CloudWatch catch this
       throw err;
     }
 
@@ -53,7 +52,7 @@ export class ImportHandler {
       const endline = deltas.indexOf('\n');
       return deltas.substring(0, endline);
     } catch {
-      throw new Error('Failed while getting last availableq delta');
+      throw new Error('Failed while getting last available delta');
     }
   }
 

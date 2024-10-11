@@ -4,6 +4,7 @@ plugins:
   - serverless-dotenv-plugin
   - serverless-plugin-typescript
   - serverless-offline
+  - serverless-plugin-aws-alerts
 
 build:
   esbuild: false
@@ -11,6 +12,20 @@ build:
 package:
   exclude:
     - test/**
+
+custom:
+  alerts:
+    stages:
+      - prod
+    topics:
+      alarm:
+        topic: ${self:service}-${opt:stage}-alerts-alarm
+        notifications:
+          - protocol: email
+            endpoint: ${env:ALERTS_EMAIL}
+    alarms:
+      - functionErrors
+      - functionThrottles
 
 useDotenv: true
 provider:

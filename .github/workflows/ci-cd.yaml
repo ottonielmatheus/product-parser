@@ -41,7 +41,7 @@ jobs:
         if: github.ref == 'refs/heads/master'
         uses: serverless/github-action@master
         with:
-          args: -c "cd ./worker && serverless deploy --stage prod"
+          args: -c "cd ./worker && serverless plugin install -n serverless-plugin-aws-alerts && serverless deploy --stage prod"
           entrypoint: /bin/sh
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}

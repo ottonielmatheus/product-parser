@@ -13,7 +13,7 @@ const ProductModel = MongooseModule.forFeature([
 
 @Module({
   imports: [ProductModel],
-  exports: [ProductModel],
+  exports: [],
   controllers: [ProductsController],
   providers: [ProductsService],
 })

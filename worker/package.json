@@ -50,7 +50,7 @@
     "testEnvironment": "node",
     "moduleNameMapper": {
       "^@core/(.*)$": "<rootDir>/../src/core/$1",
-      "@consts": "<rootDir>/core/constants"
+      "@consts": "<rootDir>/../src/core/constants"
     }
   }
 }
