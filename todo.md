@@ -23,7 +23,7 @@
 - [X] `PUT /products/:code`: Será responsável por receber atualizações do Projeto Web
 - [X] `DELETE /products/:code`: Mudar o status do produto para `trash`
 - [X] `GET /products/:code`: Obter a informação somente de um produto da base de dados
-- [ ] `GET /products`: Listar todos os produtos da base de dados, adicionar sistema de paginação para não sobrecarregar o `REQUEST`.
+- [X] `GET /products`: Listar todos os prod utos da base de dados, adicionar sistema de paginação para não sobrecarregar o `REQUEST`.
 
 ## Extras
 
@@ -33,6 +33,9 @@
 - [X] **Diferencial 4** Descrever a documentação da API utilizando o conceito de Open API 3.0;
 - [ ] **Diferencial 5** Escrever Unit Tests para os endpoints  GET e PUT do CRUD;
 - [X] **Diferencial 6** Escrever um esquema de segurança utilizando `API KEY` nos endpoints. Ref: https://learning.postman.com/docs/sending-requests/authorization/#api-key
+
+- [ ] Publicar o worker com pipeline de CI/CD
+- [ ] Publicar o server com pipeline de CI/CD
 
 ## Readme do Repositório
 

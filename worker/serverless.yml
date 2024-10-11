@@ -1,16 +1,18 @@
 service: product-parser-worker
 
-plugins:
-  - serverless-plugin-typescript
-  - serverless-offline
-
-build:
-  esbuild: false
+custom:
+  esbuild:
+    bundle: true
+    minify: false
+    sourcemap: true
+    target: node20
 
 package:
+  individually: true
   exclude:
     - node_modules/**
 
+useDotenv: true
 provider:
   name: aws
   runtime: nodejs20.x

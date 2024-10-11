@@ -1,0 +1,46 @@
+name: ci/cd pipeline
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  worker:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: worker
+    steps:
+      - name: Checkout repo's default branch
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.x
+
+      - name: Create .env file
+        run: |
+          cat > .env.prod << EOF
+          ${{ secrets.WORKER_ENV }}
+          EOF
+
+      - name: Install dependencies
+        run: npm i
+
+      - name: Start MongoDB
+        uses: supercharge/mongodb-github-action@1.11.0
+        with:
+          mongodb-version: '8.0'
+
+      - name: Run test
+        run: npm t
+
+      - name: Enter dir and deploy
+        uses: serverless/github-action@v3.2
+        with:
+          args: -c "cd ./worker && serverless deploy --stage prod"
+          entrypoint: /bin/sh
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
