@@ -33,10 +33,10 @@ jobs:
         with:
           mongodb-version: '8.0'
 
-      - name: Run test
+      - name: Run tests
         run: npm t
 
-      - name: Enter dir and deploy
+      - name: Serverless deploy
         uses: serverless/github-action@v3.2
         with:
           args: -c "cd ./worker && serverless deploy --stage prod"

@@ -21,4 +21,4 @@ functions:
   products-pooling:
     handler: src/handler.run
     events:
-      - schedule: cron(0 3 * * ? *)
+      - schedule: cron(0 12 * * ? *)
