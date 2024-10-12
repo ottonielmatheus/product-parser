@@ -3,6 +3,8 @@ import { readable } from './../__mocks__/delta_products';
 import { Database } from '@core/services/database';
 import { ImportModel } from '@core/models/import.model';
 import { ProductModel } from '@core/models/product.model';
+import { SNS } from '@core/services/SNS';
+import { PublishCommandOutput } from '@aws-sdk/client-sns';
 
 describe('Products pooling handler', () => {
   beforeEach(async () => {
@@ -26,5 +28,28 @@ describe('Products pooling handler', () => {
       const insertedProduct = await ProductModel.findById(40680024750).exec();
       expect(insertedProduct).toBeDefined();
     });
+  });
+
+  it('when a download error occurs import status should be "failed"', async () => {
+    jest
+      .spyOn(ImportHandler, 'getLastAvailableDelta')
+      .mockResolvedValue('last_delta.json.gz');
+
+    jest
+      .spyOn(ImportHandler, 'downloadDelta')
+      .mockRejectedValue(new Error('Failed to download delta'));
+
+    const snsNotify = jest
+      .spyOn(SNS, 'notify')
+      .mockResolvedValue({ MessageId: 'message-id' } as PublishCommandOutput);
+
+    const importData = await run();
+
+    expect(snsNotify).toHaveBeenCalledWith(
+      'products-pooling-error-alert',
+      'Failed to download delta',
+    );
+    expect(importData.status).toBe('failed');
+    expect(importData.message).toBe('Failed to download delta');
   });
 });

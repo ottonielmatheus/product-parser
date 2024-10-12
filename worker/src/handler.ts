@@ -4,6 +4,7 @@ import { createInterface } from 'readline';
 import { ClientSession } from 'mongoose';
 import { MAX_ROWS } from '@consts';
 import env from '@core/env';
+import { SNS } from '@core/services/SNS';
 import { ImportStatus } from '@core/interfaces/import.interface';
 import { Database } from '@core/services/database';
 import { ImportDocument, ImportModel } from '@core/models/import.model';
@@ -35,8 +36,7 @@ export class ImportHandler {
       this.import.message = err.message;
       this.import.status = ImportStatus.FAILED;
 
-      // because we want the CloudWatch catch this
-      throw err;
+      await SNS.notify(env.SNS_ERROR_ALERT_TOPIC, err.message);
     }
 
     this.import.finished_t = new Date();
@@ -127,7 +127,7 @@ export class ImportHandler {
 }
 
 export async function run() {
-  return await Database.connect<Promise<ImportDocument>>(
-    async (session) => await ImportHandler.run(session),
-  );
+  return await Database.connect<Promise<ImportDocument>>(async (session) => {
+    return await ImportHandler.run(session);
+  });
 }
