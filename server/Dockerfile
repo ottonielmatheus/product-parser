@@ -15,6 +15,8 @@ COPY . .
 
 EXPOSE 3000
 
+RUN npm install -D @nestjs/cli
+
 RUN npm run build
 
 CMD npm run start:prod
