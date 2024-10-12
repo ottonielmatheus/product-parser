@@ -1,5 +1,5 @@
 import { HydratedDocument } from 'mongoose';
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { MongooseModule, Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { IImport, ImportStatus } from '@interfaces';
 
 export type ImportDocument = HydratedDocument<Import>;
@@ -21,5 +21,9 @@ export class Import implements IImport {
   @Prop()
   message: string;
 }
-
-export const ImportSchema = SchemaFactory.createForClass(Import);
+export const ImportModel = MongooseModule.forFeature([
+  {
+    name: Import.name,
+    schema: SchemaFactory.createForClass(Import),
+  },
+]);

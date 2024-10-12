@@ -2,7 +2,7 @@ import { Readable } from 'stream';
 import { createUnzip } from 'zlib';
 import { createInterface } from 'readline';
 import { ClientSession } from 'mongoose';
-import { MAX_ROWS } from './core/constants';
+import { MAX_IMPORT_ROWS } from './core/constants';
 import env from './core/env';
 import { SNS } from './core/services/SNS';
 import { ImportStatus } from './core/interfaces/import.interface';
@@ -24,12 +24,10 @@ export class ImportHandler {
     await this.import.save({ session });
 
     try {
-      throw new Error('Intentional error :)');
-
       const lastDelta = await this.getLastAvailableDelta();
       const delta = await this.downloadDelta(lastDelta);
 
-      const rows = await this.readLines(delta, 100);
+      const rows = await this.readLines(delta, MAX_IMPORT_ROWS);
       await ProductModel.insertMany(rows, { session });
 
       this.import.total_data_imported = rows.length;

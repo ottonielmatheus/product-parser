@@ -1,9 +1,9 @@
 import { ApiProperty, PartialType } from '@nestjs/swagger';
 import { ProductStatus } from '@interfaces';
-import { Product } from '../product.schema';
+import { Product } from '../product.model';
 
 export class UpdateProductDto extends PartialType(Product) {
-  @ApiProperty({ enum: ProductStatus })
+  @ApiProperty({ enum: ProductStatus, nullable: true })
   readonly status: ProductStatus;
 
   @ApiProperty()

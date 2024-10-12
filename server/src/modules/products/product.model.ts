@@ -1,5 +1,5 @@
 import { HydratedDocument } from 'mongoose';
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { MongooseModule, Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { IProduct, ProductStatus } from '@interfaces';
 
 export type ProductDocument = HydratedDocument<Product>;
@@ -79,4 +79,9 @@ export class Product implements IProduct {
   url: string;
 }
 
-export const ProductSchema = SchemaFactory.createForClass(Product);
+export const ProductModel = MongooseModule.forFeature([
+  {
+    name: Product.name,
+    schema: SchemaFactory.createForClass(Product),
+  },
+]);

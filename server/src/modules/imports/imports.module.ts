@@ -1,19 +1,12 @@
 import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
-import { Import, ImportSchema } from './import.schema';
+import { ImportModel } from './import.model';
 import { ImportsService } from './imports.service';
-
-const ImportModel = MongooseModule.forFeature([
-  {
-    name: Import.name,
-    schema: ImportSchema,
-  },
-]);
+import { ImportsRepository } from './imports.repository';
 
 @Module({
   imports: [ImportModel],
-  exports: [ImportModel],
+  exports: [ImportModel, ImportsRepository],
   controllers: [],
-  providers: [ImportsService],
+  providers: [ImportsRepository, ImportsService],
 })
 export class ImportsModule {}

@@ -9,7 +9,7 @@ import {
   NotFoundException,
   Query,
 } from '@nestjs/common';
-import { Product } from './product.schema';
+import { Product } from './product.model';
 import { ProductsService } from './products.service';
 import { UpdateProductDto } from './dto/update.dto';
 import {

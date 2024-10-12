@@ -6,7 +6,7 @@ import { ProductModel } from '@core/models/product.model';
 import { SNS } from '@core/services/SNS';
 import { PublishCommandOutput } from '@aws-sdk/client-sns';
 
-describe.skip('Products pooling handler', () => {
+describe('Products pooling handler', () => {
   beforeEach(async () => {
     await Database.connect(async () => {
       await ImportModel.deleteMany({}).exec();
@@ -46,7 +46,7 @@ describe.skip('Products pooling handler', () => {
     const importData = await run();
 
     expect(snsNotify).toHaveBeenCalledWith(
-      'products-pooling-error-alert',
+      'arn:aws:sns:us-east-1:000000000000:products-pooling-error-alert',
       'Failed to download delta',
     );
     expect(importData.status).toBe('failed');
