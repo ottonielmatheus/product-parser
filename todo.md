@@ -4,7 +4,7 @@
 - [X] Criar uma REST API com as melhores práticas de desenvolvimento, Design Patterns, SOLID e DDD.
 - [X] Integrar a API com o banco de dados criado para persistir os dados
 - [X] Recomendável usar Drivers oficiais para integração com o DB
-- [ ] Desenvolver Testes Unitários
+- [x] Desenvolver Testes Unitários
 
 ### Modelo de Dados:
 
@@ -31,7 +31,7 @@
 - [X] **Diferencial 2** Configurar Docker no Projeto para facilitar o Deploy da equipe de DevOps;
 - [X] **Diferencial 3** Configurar um sistema de alerta se tem algum falho durante o Sync dos produtos;
 - [X] **Diferencial 4** Descrever a documentação da API utilizando o conceito de Open API 3.0;
-- [ ] **Diferencial 5** Escrever Unit Tests para os endpoints  GET e PUT do CRUD;
+- [?] **Diferencial 5** Escrever Unit Tests para os endpoints  GET e PUT do CRUD;
 - [X] **Diferencial 6** Escrever um esquema de segurança utilizando `API KEY` nos endpoints. Ref: https://learning.postman.com/docs/sending-requests/authorization/#api-key
 
 ## Melhorias

@@ -18,15 +18,12 @@ export class BaseRepository<T> {
     query: RootFilterQuery<T>,
     params: QueryParams,
   ): Promise<IPaginated<T>> {
-    const session = await this.model.startSession();
     const items = await this.model
-      .find(query, {}, { session })
+      .find(query, {})
       .limit(params?.take || 15)
       .skip(params?.skip || 0)
       .exec();
-
-    const count = await this.model.countDocuments().exec();
-    await session.endSession();
+    const count = await this.model.countDocuments({}).exec();
     return {
       items,
       total: count,
