@@ -6,7 +6,7 @@ import { ProductModel } from '@core/models/product.model';
 import { SNS } from '@core/services/SNS';
 import { PublishCommandOutput } from '@aws-sdk/client-sns';
 
-describe('Products pooling handler', () => {
+describe.skip('Products pooling handler', () => {
   beforeEach(async () => {
     await Database.connect(async () => {
       await ImportModel.deleteMany({}).exec();

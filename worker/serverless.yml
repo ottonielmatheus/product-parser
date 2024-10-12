@@ -17,6 +17,13 @@ provider:
   name: aws
   runtime: nodejs20.x
 
+  iamRoleStatements:
+  - Effect: Allow
+    Action:
+      - sns:Publish
+    Resource:
+      - ${env:SNS_ERROR_ALERT_TOPIC}
+
 functions:
   products-pooling:
     handler: src/handler.run

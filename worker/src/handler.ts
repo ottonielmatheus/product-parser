@@ -2,14 +2,14 @@ import { Readable } from 'stream';
 import { createUnzip } from 'zlib';
 import { createInterface } from 'readline';
 import { ClientSession } from 'mongoose';
-import { MAX_ROWS } from '@consts';
-import env from '@core/env';
-import { SNS } from '@core/services/SNS';
-import { ImportStatus } from '@core/interfaces/import.interface';
-import { Database } from '@core/services/database';
-import { ImportDocument, ImportModel } from '@core/models/import.model';
-import { ProductModel } from '@core/models/product.model';
-import { IProduct, ProductStatus } from '@core/interfaces/product.interface';
+import { MAX_ROWS } from './core/constants';
+import env from './core/env';
+import { SNS } from './core/services/SNS';
+import { ImportStatus } from './core/interfaces/import.interface';
+import { Database } from './core/services/database';
+import { ImportDocument, ImportModel } from './core/models/import.model';
+import { ProductModel } from './core/models/product.model';
+import { IProduct, ProductStatus } from './core/interfaces/product.interface';
 
 export class ImportHandler {
   static import: ImportDocument;
@@ -24,10 +24,12 @@ export class ImportHandler {
     await this.import.save({ session });
 
     try {
+      throw new Error('Intentional error :)');
+
       const lastDelta = await this.getLastAvailableDelta();
       const delta = await this.downloadDelta(lastDelta);
 
-      const rows = await this.readLines(delta, MAX_ROWS);
+      const rows = await this.readLines(delta, 100);
       await ProductModel.insertMany(rows, { session });
 
       this.import.total_data_imported = rows.length;
